@@ -6,7 +6,17 @@ class TinkerParser(Parser):
     
     # put grammar here
 
-    
+    @_('args_decl "," PID',
+       'args_decl "," T PID',
+       'PID',
+       'T PID')
+    def args_decl(self, p):
+        return 'args_decl'
+
+    @_('args "," PID',
+       'PID')
+    def args(self, p):
+        return 'args'
 
     # arithmetic expression
     @_('value',

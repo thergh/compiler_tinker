@@ -11,7 +11,7 @@ class TinkerLexer(Lexer):
               EQUAL, NEQUAL, MORE, LESS, MOREEQ, LESSEQ,
               ASSIGN, LPAREN, RPAREN, PROCEDURE, IS, IN, END,
               PROGRAM, IF, THEN, ELSE, ENDIF, WHILE, DO, ENDWHILE,
-              REPEAT, UNTIL, READ, WRITE, COMMENT}
+              REPEAT, UNTIL, READ, WRITE, COMMENT, T}
     
     literals = {',', ';', '#', '+', '-', '*', '/', '%'}
     
@@ -61,6 +61,7 @@ class TinkerLexer(Lexer):
     LESS = r'<'
     
     # misc
+    T = r'T'        # initializing an array
     ASSIGN = r':='  # maybe will have to move upwards later
     LPAREN = r'\('
     RPAREN = r'\)'
