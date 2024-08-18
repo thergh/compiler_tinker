@@ -9,11 +9,11 @@ class TinkerLexer(Lexer):
             #   COMMA, SCOLON, HASH, PLUS, MINUS, TIMES,
             #   DIVIDE, MOD,
               EQUAL, NEQUAL, MORE, LESS, MOREEQ, LESSEQ,
-              ASSIGN, LPAREN, RPAREN, PROCEDURE, IS, IN, END,
-              PROGRAM, IF, THEN, ELSE, ENDIF, WHILE, DO, ENDWHILE,
-              REPEAT, UNTIL, READ, WRITE, COMMENT, T}
+              ASSIGN, PROCEDURE,
+              IS, IN, END, PROGRAM, IF, THEN, ELSE, ENDIF, WHILE,
+              DO, ENDWHILE, REPEAT, UNTIL, READ, WRITE, COMMENT, T}
     
-    literals = {',', ';', '#', '+', '-', '*', '/', '%'}
+    literals = {',', ';', '#', '+', '-', '*', '/', '%', '[', ']', '(', ')'}
     
     # the higher a rule, the more priority it gets
     COMMENT = r'#.*\n'
@@ -55,7 +55,7 @@ class TinkerLexer(Lexer):
     # conditions
     EQUAL = r'='
     NEQUAL = r'!='
-    MOREEQ = r">="
+    MOREEQ = r'>='
     LESSEQ = r'<='
     MORE = r'>'
     LESS = r'<'
@@ -63,9 +63,6 @@ class TinkerLexer(Lexer):
     # misc
     T = r'T'        # initializing an array
     ASSIGN = r':='  # maybe will have to move upwards later
-    LPAREN = r'\('
-    RPAREN = r'\)'
-
 
 
 if __name__ == '__main__':
