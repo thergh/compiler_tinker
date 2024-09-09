@@ -20,26 +20,19 @@ class TinkerParser(Parser):
         return 'commands'
 
 
+    # TODO: not recognising if statements
     @_('identifier ASSIGN expression ";"',
        'IF condition THEN commands ELSE commands ENDIF',
        'IF condition THEN commands ENDIF',
        'WHILE condition DO commands ENDWHILE',
        'REPEAT commands UNTIL condition ";"',
     #    'proc_call;',
+    # DEBUG:
+        # 'IF condition THEN ENDIF ";"',
         'READ identifier ";"',
         'WRITE value ";"')
     def command(self, p):
         return 'command'
-    
-    
-    # @_('PID "(" args_decl ")"')
-    # def proc_head(self, p):
-    #     return 'proc_head'
-    
-    
-    # @_('PID "(" args ")')
-    # def proc_call(self, p):
-    #     return 'proc_call'
     
     
     @_('declarations "," PID',
@@ -50,20 +43,6 @@ class TinkerParser(Parser):
         return 'declarations'
     
     
-    # @_('args_decl "," PID',
-    #    'args_decl "," "T" PID',
-    #    'PID',
-    #    '"T" PID')
-    # def args_decl(self, p):
-    #     return 'args_decl'
-
-
-    # @_('args "," PID',
-    #    'PID')
-    # def args(self, p):
-    #     return 'args'
-
-
     # arithmetic expression
     @_('value',
        'value "+" value',
@@ -109,11 +88,28 @@ class TinkerParser(Parser):
 if __name__ == '__main__':
     lexer = TinkerLexer()
     parser = TinkerParser()
+    
+    # temporarlyhardcoded source file as input_code.txt
+    with open('./programs/test_selt.txt', 'r') as file:
+        data = file.read()
+        
+        
+    tokens = lexer.tokenize(data)
 
-    while True:
-        try:
-            input_text = input('calc > ')
-            result = parser.parse(lexer.tokenize(input_text))
-            print(result)
-        except EOFError:
-            break
+    # printing all tokens with their values
+    # for token in tokens:
+    #     print('type=%r, value=%r' % (token.type, token.value))
+
+
+    
+    parsed_result = parser.parse(tokens)
+    print(parsed_result)
+
+    # while True:
+    #     try:
+    #         input_text = input('calc > ')
+    #         result = parser.parse(lexer.tokenize(input_text))
+    #         print(result)
+    #     except EOFError:
+    #         break
+    

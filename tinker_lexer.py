@@ -3,6 +3,11 @@
 from sly import Lexer
 
 class TinkerLexer(Lexer):
+    
+    # # Error handling rule
+    # def error(self, t):
+    #     print("Illegal character '%s'" % t.value[0])
+    #     self.index += 1
 
     # declaring lexer tokens
     tokens = {PID, NUM,
@@ -16,7 +21,9 @@ class TinkerLexer(Lexer):
     literals = {',', ';', '#', '+', '-', '*', '/', '%', '[', ']', '(', ')'}
     
     # the higher a rule, the more priority it gets
-    COMMENT = r'#.*\n'
+    # COMMENT = r'#.*\n'
+    ignore_comment = r'\#.*'
+    ignore_newline = r'\n+'
     ignore = ' \t\n'
     
     
@@ -24,12 +31,12 @@ class TinkerLexer(Lexer):
     PROCEDURE = r'PROCEDURE'
     IS = r'IS'
     IN = 'IN'
+    ENDIF = 'ENDIF'
     END = 'END'
     PROGRAM = 'PROGRAM'
     IF = 'IF'
     THEN = 'THEN'
     ELSE = 'ELSE'
-    ENDIF = 'ENDIF'
     WHILE = 'WHILE'
     DO = 'DO'
     ENDWHILE = 'ENDWHILE'
@@ -69,7 +76,7 @@ if __name__ == '__main__':
     lexer = TinkerLexer()
     
     # temporarlyhardcoded source file as input_code.txt
-    with open('input_test_1.txt', 'r') as file:
+    with open('./programs/input_test_1.txt', 'r') as file:
         data = file.read()
         
     # printing all tokens with their values
