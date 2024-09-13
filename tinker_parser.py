@@ -20,15 +20,12 @@ class TinkerParser(Parser):
         return 'commands'
 
 
-    # TODO: not recognising if statements
     @_('identifier ASSIGN expression ";"',
        'IF condition THEN commands ELSE commands ENDIF',
        'IF condition THEN commands ENDIF',
        'WHILE condition DO commands ENDWHILE',
        'REPEAT commands UNTIL condition ";"',
     #    'proc_call;',
-    # DEBUG:
-        # 'IF condition THEN ENDIF ";"',
         'READ identifier ";"',
         'WRITE value ";"')
     def command(self, p):
@@ -43,28 +40,59 @@ class TinkerParser(Parser):
         return 'declarations'
     
     
-    # arithmetic expression
-    @_('value',
-       'value "+" value',
-       'value "-" value',
-       'value "*" value',
-       'value "/" value',
-       'value "%" value')
+    # arithmetic expressions
+    
+    @_('value')
     def expression(self, p):
-        return 'expression'
+        return p[0]
+    
+    @_('value "+" value')
+    def expression(self, p):
+        return 'add', p[0], p[2]
+    
+    @_('value "-" value')
+    def expression(self, p):
+        return 'sub', p[0], p[2]
+    
+    @_('value "*" value')
+    def expression(self, p):
+        return 'mul', p[0], p[2]
+    
+    @_('value "/" value')
+    def expression(self, p):
+        return 'div', p[0], p[2]
+    
+    @_('value "%" value')
+    def expression(self, p):
+        return 'mod', p[0], p[2]
+    
     
     
     # logic statements
-    # temporarly unreachable...
-    @_('value EQUAL value', # type: ignore
-       'value NEQUAL value',
-       'value MORE value',
-       'value LESS value',
-       'value MOREEQ value',
-       'value LESSEQ value',)
+    
+    @_('value EQUAL value')
     def condition(self, p):
-        # return (p[1], p[0], p[2])
-        return 'condition'
+        return 'equal', p[0], p[2]
+    
+    @_('value NEQUAL value')
+    def condition(self, p):
+        return 'nequal', p[0], p[2]
+    
+    @_('value MORE value')
+    def condition(self, p):
+        return 'more', p[0], p[2]
+    
+    @_('value LESS value')
+    def condition(self, p):
+        return 'less', p[0], p[2]
+    
+    @_('value MOREEQ value')
+    def condition(self, p):
+        return 'moreeq', p[0], p[2]
+    
+    @_('value LESSEQ value')
+    def condition(self, p):
+        return 'lesseq', p[0], p[2]
     
     
     # value of a variable
@@ -72,7 +100,7 @@ class TinkerParser(Parser):
        'identifier')
     def value(self, p):
         # return p[0]
-        return 'value'
+        return 'value', p[0]
     
     
     # name of a variable
